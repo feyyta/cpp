@@ -1,0 +1,52 @@
+
+ex 00 : stack et heap
+  STACK                           HEAP
+  ┌─────────────────────┐         ┌────────┐
+  │ randomChump         │         │        │
+  │  ┌───────────────┐  │         │        │
+  │  │ Zombie bro    │  │         │        │
+  │  │ _name="roro"  │  │ ← ICI   │        │
+  │  └───────────────┘  │         │        │
+  └─────────────────────┘         └────────┘
+
+  Fin de randomChump :
+  ┌─────────────────────┐         ┌────────┐
+  │                     │         │        │
+  │  Zombie détruit     │         │        │
+  └─────────────────────┘         └────────┘
+       ↑
+     Destructeur appelé !
+
+  newZombie
+
+  STACK                           HEAP
+  ┌─────────────────────┐         ┌────────────────────┐
+  │ newZombie           │         │                    │
+  │  ┌───────────────┐  │         │  ┌──────────────┐  │
+  │  │ Zombie* bro   │──┼────────→│  │ Zombie       │  │
+  │  │ (pointeur)    │  │         │  │ _name="popo" │  │
+  │  └───────────────┘  │         │  └──────────────┘  │
+  └─────────────────────┘         └────────────────────┘
+
+  Fin de newZombie :
+  ┌─────────────────────┐         ┌────────────────────┐
+  │                     │         │                    │
+  │  Pointeur détruit   │   ✗     │  ┌──────────────┐  │
+  │  (variable locale)  │  mais   │  │ Zombie       │  │
+  │                     │  pas    │  │ TOUJOURS LÀ! │  │
+  │                     │   ↓     │  └──────────────┘  │
+  └─────────────────────┘         └────────────────────┘
+                                         ↑
+                                   Pas de destructeur !
+                                   Survit sur le HEAP !
+
+| Situation        | Destructeur appelé quand ? |
+  |------------------|----------------------------|
+  | Variable locale  | Fin du {}                  |
+  | new              | delete                     |
+  | Membre de classe | Destructeur de la classe   |
+  | Tableau          | Fin du scope du tableau    |
+  | Programme        | return 0 du main           |
+
+
+ex01
